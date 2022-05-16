@@ -8,7 +8,9 @@ import Entity from './src/Entity.js';
 import System from './src/System.js';
 
 class RenderingSystem extends System {
-  query = ['@shape','@position','visible']
+  
+  query = ['@shape', '@position', 'visible']
+  
   init(app) {
     this.cnv = document.createElement("canvas");
     this.cnv.width = 400;
@@ -16,6 +18,7 @@ class RenderingSystem extends System {
     this.cnv.style.background = '#000';
     this.ctx = this.cnv.getContext("2d");
   }
+  
   tick(dt, entities) {
     this.ctx.fillStyle = '#fff';
     entities.forEach(entity => {
@@ -24,6 +27,7 @@ class RenderingSystem extends System {
       }
     });
   }
+
 }
 
 class MovementSystem extends System {
