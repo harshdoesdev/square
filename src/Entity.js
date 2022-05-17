@@ -31,6 +31,8 @@ export default class Entity extends Emitter {
         this.tag(`@${prop}`);
         this.components.add(prop);
         this.emit("attach", prop, this);
+
+        return this;
     }
 
     detach(prop) {
@@ -38,16 +40,22 @@ export default class Entity extends Emitter {
         this.untag(`@${prop}`);
         this.components.delete(prop);
         this.emit("detach", prop, this);
+
+        return this;
     }
     
     tag(tag) {
         this.tags.add(tag);
         this.emit("tag", tag, this);
+
+        return this;
     }
 
     untag(tag) {
         this.tags.delete(tag);
         this.emit("untag", tag, this);
+
+        return this;
     }
 
 }

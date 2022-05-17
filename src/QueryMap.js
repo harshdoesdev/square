@@ -50,7 +50,6 @@ export default class QueryMap {
 
     handleTag(tag, entity) {
         this.addToMap(entity);
-        console.log(this.queryMap)
     }
 
     handleUntag(tag, entity) {
