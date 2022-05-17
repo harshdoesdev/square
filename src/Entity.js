@@ -9,6 +9,7 @@ export default class Entity extends Emitter {
         this.id = id++;
         this.children = new Set();
         this.tags = new Set();
+        this.components = new Set();
         
         this.tag('*');
     }
@@ -25,30 +26,28 @@ export default class Entity extends Emitter {
         this.emit("remove", child);
     }
 
-    attach(prop, component) {
-        this[prop] = component;
+    attach(prop, data) {
+        this[prop] = data;
         this.tag(`@${prop}`);
+        this.components.add(prop);
         this.emit("attach", prop, this);
     }
 
     detach(prop) {
         delete this[prop];
         this.untag(`@${prop}`);
+        this.components.delete(prop);
         this.emit("detach", prop, this);
     }
-
-    tag(...tags) {
-        tags.forEach(tag => {
-            this.tags.add(tag);
-            this.emit("tag", tag, this);
-        });
+    
+    tag(tag) {
+        this.tags.add(tag);
+        this.emit("tag", tag, this);
     }
 
-    untag(...tags) {
-        tags.forEach(tag => {
-            this.tags.delete(tag);
-            this.emit("untag", tag, this);
-        });
+    untag(tag) {
+        this.tags.delete(tag);
+        this.emit("untag", tag, this);
     }
 
 }
