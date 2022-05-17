@@ -44,8 +44,6 @@ export default class Application extends Emitter {
 
         this.systems.forEach(system => system(this));
 
-        this.queryMap.init(this.systems);
-
         this.emit("init", this);
     
         const loop = () => {

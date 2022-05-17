@@ -5,18 +5,9 @@ export default class QueryMap {
 
     constructor(app) {
         this.app = app;
-        this.queryMap = null;
+        this.queryMap = new Map();
         this.app.on("add", this.onAdd.bind(this));
         this.app.on("remove", this.onRemove.bind(this));
-    }
-
-    init(systems) {
-        const queries = Array
-            .from(systems)
-            .map(system => system.query)
-            .map(query => [query, new Set()]);
-
-        this.queryMap = new Map(queries);
     }
 
     getEntities(query) {
