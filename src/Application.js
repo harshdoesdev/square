@@ -71,6 +71,7 @@ export default class Application extends Emitter {
             cancelAnimationFrame(this._frameRequest);
         this._frameRequest = null;
         this.running = false;
+        this.emit("stop");
     }
     
 }
