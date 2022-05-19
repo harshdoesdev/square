@@ -52,6 +52,9 @@ export default class Entity extends Emitter {
     }
 
     untag(tag) {
+        if(this.components.has(tag)) {
+            console.warn(`Component ${tag} could not be detached.`);
+        }
         this.tags.delete(tag);
         this.emit("untag", tag, this);
 
