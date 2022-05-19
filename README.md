@@ -1,3 +1,4 @@
+![Square Banner](https://github.com/rare-earth/Square/raw/main/square-banner.png)
 # Square
 An Entity Component System Based Game Engine
 
