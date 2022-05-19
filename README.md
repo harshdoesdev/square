@@ -99,9 +99,9 @@ export const ShapeRenderer = app => {
     });
 }
 
-const GRAVITY_CONSTANT = 6.5;
-
 export const GravitySystem = app => {
+    const GRAVITY_CONSTANT = 6.5;
+    
     app.on("update", dt => {
         const entities = app.query(KinematicBodyQuery);
         entities.forEach(entity => {
