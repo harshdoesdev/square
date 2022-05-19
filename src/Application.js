@@ -6,9 +6,10 @@ export default class Application extends Emitter {
 
     running = false
 
-    constructor({ initialState, systems }) {
+    constructor({ initialState = {}, config = {}, systems }) {
         super();
         this.state = initialState;
+        this.config = config;
         this.entityPool = new EntityPool(10);
         this.entities = new Set();
         this.systems = new Set(systems);
