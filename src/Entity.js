@@ -15,13 +15,11 @@ export default class Entity extends Emitter {
     }
 
     add(child) {
-        child.init();
         this.children.add(child);
         this.emit("add", child);
     }
 
     remove(child) {
-        child.destroy();
         this.children.delete(child);
         this.emit("remove", child);
     }
