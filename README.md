@@ -16,11 +16,13 @@ import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSys
 import { BoxShapeComponent, VectorComponent } from "./components.js";
 
 const app = new Application({
-    initialState: {
+    config: {
         canvas: {
             width: 400,
             height: 400,
-        },
+        }
+    },
+    initialState: {
         score: 0,
         loading: true
     },
@@ -57,8 +59,8 @@ import { RenderableQuery, KinematicBodyQuery } from "./queries.js";
 
 export const RenderingSystem = app => {
     const canvas = document.createElement("canvas");
-    canvas.width = app.state.canvas.width;
-    canvas.height = app.state.canvas.height;
+    canvas.width = app.config.canvas.width;
+    canvas.height = app.config.canvas.height;
     canvas.style.background = "#000";
 
     const context = canvas.getContext("2d");
