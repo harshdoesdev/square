@@ -11,7 +11,7 @@ npm install square2d
 
 **app.js**
 ```javascript
-import Application from "./void2d/Application.js";
+import Application from "./square2d/Application.js";
 import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./systems.js";
 import { BoxShapeComponent, VectorComponent } from "./components.js";
 
