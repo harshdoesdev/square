@@ -6,7 +6,7 @@ An Entity Component System Based Game Engine
 **app.js**
 ```javascript
 import Application from "./void2d/Application.js";
-import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem } from "./systems.js";
+import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./systems.js";
 import { BoxShapeComponent, VectorComponent } from "./components.js";
 
 const app = new Application({
@@ -22,7 +22,8 @@ const app = new Application({
         RenderingSystem, 
         ShapeRenderer, 
         InputSystem, 
-        GravitySystem
+        GravitySystem,
+        MovementSystem
     ]
 });
 
@@ -35,7 +36,7 @@ app.on("init", app => {
     player.attach("position", new VectorComponent(20, 20));
     player.attach("shape", new BoxShapeComponent(32, 32));
     player.attach("speed", 100);
-    player.attach("jumpforce", 10);
+    player.attach("jumpforce", 500);
     player.attach("velocity", new VectorComponent);
 
     app.add(player);
@@ -68,22 +69,24 @@ export const RenderingSystem = app => {
 
 export const InputSystem = app => {
 
-    let shouldJump = false;
+    app.state.keyboard = {};
 
     const handleKey = ({ key, type }) => {
-        shouldJump = key === " " && type === "keydown";
+        app.state.keyboard[key === " " ? "Spacebar" : key] = type === "keydown";
     };
-
-    app.on("update", dt => {
-        const [player] = app.query("player");
-        if(!player.tags.has("jumping") && shouldJump) {
-            player.velocity.y -= player.jumpforce;
-        }
-    });
 
     window.addEventListener("keydown", handleKey);
     window.addEventListener("keyup", handleKey);
-}
+};
+
+export const MovementSystem = app => {
+    app.on("update", dt => {
+        const [player] = app.query("controllable");
+        if(!player.tags.has("jumping") && app.state.keyboard.Spacebar) {
+            player.velocity.y -= player.jumpforce * dt;
+        }
+    });
+};
 
 export const ShapeRenderer = app => {
     app.on("render", ctx => {
