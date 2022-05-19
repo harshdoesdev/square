@@ -138,6 +138,7 @@ export const KinematicBodyQuery = ['@position', '@shape', '@velocity'];
 ```javascript
 export class BoxShapeComponent {
     constructor(width, height) {
+        this.type = "box";
         this.width = width;
         this.height = height;
     }
