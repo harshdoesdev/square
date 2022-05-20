@@ -49,4 +49,11 @@ export default class Entity extends Emitter {
         return this;
     }
 
+    destroy() {
+        this.components.forEach(component => this.detach(component));
+        this.components.clear();
+        this.tags.clear();
+        this.tags.add("*");
+    }
+
 }

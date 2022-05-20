@@ -23,10 +23,7 @@ export default class EntityPool {
     }
 
     recycle(entity) {
-        entity.tags.clear();
-        entity.tags.add("*");
-        entity.components.forEach(component => delete entity[component]);
-        entity.components.clear();
+        entity.destroy();
         this.entities.push(entity);
     }
 
