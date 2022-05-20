@@ -27,8 +27,6 @@ export default class EntityPool {
         entity.tags.add("*");
         entity.components.forEach(component => delete entity[component]);
         entity.components.clear();
-        entity.children.forEach(child => child.emit("destroy"));
-        entity.children.clear();
         this.entities.push(entity);
     }
 

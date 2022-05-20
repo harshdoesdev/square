@@ -4,24 +4,14 @@ let id = 0;
 
 export default class Entity extends Emitter {
 
-    constructor() {
+    constructor(app) {
         super();
+        this.app = app;
         this.id = id++;
-        this.children = new Set();
         this.tags = new Set();
         this.components = new Set();
         
         this.tag('*');
-    }
-
-    add(child) {
-        this.children.add(child);
-        this.emit("add", child);
-    }
-
-    remove(child) {
-        this.children.delete(child);
-        this.emit("remove", child);
     }
 
     attach(prop, data) {

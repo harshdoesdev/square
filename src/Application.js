@@ -10,7 +10,7 @@ export default class Application extends Emitter {
         super();
         this.state = initialState;
         this.config = config;
-        this.entityPool = new EntityPool(10);
+        this.entityPool = new EntityPool();
         this.entities = new Set();
         this.systems = new Set(systems);
         this.queryMap = new QueryMap(this);
