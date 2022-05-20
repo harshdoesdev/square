@@ -4,7 +4,7 @@ An Entity Component System(ECS) Based Game Framework
 
 ## Install
 ```bash 
-npm install square2d
+npm install square-ecs
 ```
 
 ## Example
