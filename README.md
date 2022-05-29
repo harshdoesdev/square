@@ -2,16 +2,11 @@
 # Square
 An Entity Component System(ECS) Based Game Framework
 
-## Install
-```bash 
-npm install square-ecs
-```
-
 ## Example
 
 **app.js**
 ```javascript
-import Application from "./square2d/Application.js";
+import Application from "./src/Application.js";
 import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./systems.js";
 import { BoxShapeComponent, VectorComponent } from "./components.js";
 
