@@ -1,6 +1,6 @@
-import Application from "../src/Application.js";
-import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./systems.js";
-import { BoxShapeComponent, VectorComponent } from "./components.js";
+import { Application } from "square-ecs";
+import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./src/systems.js";
+import { BoxShapeComponent, VectorComponent } from "./src/components.js";
 
 const app = new Application({
     config: {

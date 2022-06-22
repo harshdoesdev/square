@@ -1,12 +1,30 @@
-import Emitter from "./Emitter.js";
-import EntityPool from "./EntityPool.js";
-import QueryMap from "./QueryMap.js";
+import Emitter from "./Emitter";
+import EntityPool from "./EntityPool";
+import QueryMap from "./QueryMap";
 
-export default class Application extends Emitter {
+export default class Application extends Emitter implements IApplication {
 
-    running = false
+    state: {}
+    config: {}
+    entityPool: EntityPool
+    entities: Set<IEntity>
+    systems: Set<ISystem>
+    queryMap: IQueryMap
+    running: boolean = false
+    _lastStep: number = 0;
+    _frameRequest: number | null = null;
 
-    constructor({ initialState = {}, config = {}, systems }) {
+    constructor(
+        { 
+            initialState = {}, 
+            config = {}, 
+            systems 
+        } : {
+            initialState: {},
+            config: {},
+            systems: ISystem[]
+        }
+    ) {
         super();
         this.state = initialState;
         this.config = config;
@@ -16,7 +34,7 @@ export default class Application extends Emitter {
         this.queryMap = new QueryMap(this);
     }
 
-    add(entity) {
+    add(entity: IEntity) {
         this.emit("add", entity);
         this.entities.add(entity);
 
@@ -24,7 +42,7 @@ export default class Application extends Emitter {
         entity.on("untag", this.queryMap.boundHandleUntag);
     }
 
-    remove(entity) {
+    remove(entity: IEntity) {
         this.emit("remove", entity);
         this.entities.delete(entity);
         this.entityPool.recycle(entity);
@@ -33,7 +51,7 @@ export default class Application extends Emitter {
         entity.off("untag", this.queryMap.boundHandleUntag);
     }
 
-    query(q) {
+    query(q: string[]) {
         return this.queryMap.getEntities(q);
     }
 

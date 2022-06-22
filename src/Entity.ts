@@ -1,12 +1,15 @@
-import Emitter from "./Emitter.js";
+import Emitter from "./Emitter";
 
-let id = 0;
+let id: number = 0;
 
-export default class Entity extends Emitter {
+export default class Entity extends Emitter implements IEntity {
 
-    constructor(app) {
+    id: number;
+    tags: Set<string>;
+    components: Set<string>;
+
+    constructor() {
         super();
-        this.app = app;
         this.id = id++;
         this.tags = new Set();
         this.components = new Set();
@@ -14,8 +17,8 @@ export default class Entity extends Emitter {
         this.tag('*');
     }
 
-    attach(prop, data) {
-        this[prop] = data;
+    attach(prop: string, data: any) {
+        this[prop as keyof Entity] = data;
         this.tag(`@${prop}`);
         this.components.add(prop);
         this.emit("attach", prop, this);
@@ -23,8 +26,8 @@ export default class Entity extends Emitter {
         return this;
     }
 
-    detach(prop) {
-        delete this[prop];
+    detach(prop: string) {
+        delete this[prop as keyof Entity];
         this.untag(`@${prop}`);
         this.components.delete(prop);
         this.emit("detach", prop, this);
@@ -32,14 +35,14 @@ export default class Entity extends Emitter {
         return this;
     }
     
-    tag(tag) {
+    tag(tag: string) {
         this.tags.add(tag);
         this.emit("tag", tag, this);
 
         return this;
     }
 
-    untag(tag) {
+    untag(tag: string) {
         if(this.components.has(`@${tag}`)) {
             console.warn(`Component ${tag} could not be detached.`);
         }

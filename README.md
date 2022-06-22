@@ -1,14 +1,18 @@
-![Square Banner](https://github.com/rare-earth/Square/raw/main/square-banner.png)
+![Square Banner](https://github.com/rare-earth/Square/raw/main/banner.png)
 # Square
 An Entity Component System(ECS) Based Game Framework
 
-## Example
+## Installation
+```bash
+npm i square-ecs
+```
 
+## Example
 **app.js**
 ```javascript
-import Application from "./src/Application.js";
-import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./systems.js";
-import { BoxShapeComponent, VectorComponent } from "./components.js";
+import { Application } from "square-ecs";
+import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSystem } from "./src/systems.js";
+import { BoxShapeComponent, VectorComponent } from "./src/components.js";
 
 const app = new Application({
     config: {
@@ -43,6 +47,14 @@ app.on("init", app => {
     player.attach("velocity", new VectorComponent);
 
     app.add(player);
+
+    const c = app.entityPool.getEntity();
+    c.tag("visible");
+    c.attach("position", new VectorComponent(100, 20));
+    c.attach("shape", new BoxShapeComponent(32, 32));
+    c.attach("velocity", new VectorComponent);
+
+    app.add(c);
 });
 
 app.start();

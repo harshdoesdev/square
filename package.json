@@ -1,0 +1,25 @@
+{
+  "name": "square-ecs",
+  "version": "1.0.0",
+  "description": "![Square Banner](https://github.com/rare-earth/Square/raw/main/square-banner.png) # Square An Entity Component System(ECS) Based Game Framework",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rare-earth/Square.git"
+  },
+  "keywords": [
+    "entity component system",
+    "game framework"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rare-earth/Square/issues"
+  },
+  "homepage": "https://github.com/rare-earth/Square#readme"
+}
