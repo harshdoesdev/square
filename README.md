@@ -3,9 +3,7 @@
 An Entity Component System(ECS) Based Game Framework
 
 ## Installation
-```bash
-npm i square-ecs
-```
+```bash npm i square-ecs```
 
 ## Example
 **app.js**

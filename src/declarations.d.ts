@@ -1,4 +1,4 @@
-interface IApplication extends IEmitter {
+declare interface IApplication extends IEmitter {
     running: boolean,
     state: {},
     config: {},
@@ -12,11 +12,11 @@ interface IApplication extends IEmitter {
     stop(): void
 }
 
-interface ISystem {
+declare interface ISystem {
     (app: IApplication): void
 }
 
-interface IEntity extends IEmitter {
+declare interface IEntity extends IEmitter {
     id: number,
     tags: Set<string>,
     components: Set<string>,
@@ -27,18 +27,18 @@ interface IEntity extends IEmitter {
     destroy(): void
 }
 
-interface IListener {
+declare interface IListener {
     (...data: any[]): void
 }
 
-interface IEmitter {
+declare interface IEmitter {
     topics: any,
     emit(id: string, ...data: any[]),
     on(id: string, listener: IListener),
     off(id: string, listener: IListener)
 }
 
-interface IQueryMap {
+declare interface IQueryMap {
     boundHandleTag(arg0: string, boundHandleTag: any)
     boundHandleUntag(arg0: string, boundHandleUntag: any)
     getEntities(q: any)
