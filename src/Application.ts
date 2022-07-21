@@ -4,8 +4,7 @@ import QueryMap from "./QueryMap";
 
 export default class Application extends Emitter implements IApplication {
 
-    state: {}
-    config: {}
+    data: {}
     entityPool: EntityPool
     entities: Set<IEntity>
     systems: Set<ISystem>
@@ -14,20 +13,9 @@ export default class Application extends Emitter implements IApplication {
     _lastStep: number = 0;
     _frameRequest: number | null = null;
 
-    constructor(
-        { 
-            initialState = {}, 
-            config = {}, 
-            systems 
-        } : {
-            initialState: {},
-            config: {},
-            systems: ISystem[]
-        }
-    ) {
+    constructor({ data = {}, systems } : { data: {}, systems: ISystem[] }) {
         super();
-        this.state = initialState;
-        this.config = config;
+        this.data = data;
         this.entityPool = new EntityPool();
         this.entities = new Set();
         this.systems = new Set(systems);

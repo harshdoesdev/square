@@ -2,13 +2,12 @@ import Emitter from "./Emitter";
 import EntityPool from "./EntityPool";
 import QueryMap from "./QueryMap";
 export default class Application extends Emitter {
-    constructor({ initialState = {}, config = {}, systems }) {
+    constructor({ data = {}, systems }) {
         super();
         this.running = false;
         this._lastStep = 0;
         this._frameRequest = null;
-        this.state = initialState;
-        this.config = config;
+        this.data = data;
         this.entityPool = new EntityPool();
         this.entities = new Set();
         this.systems = new Set(systems);

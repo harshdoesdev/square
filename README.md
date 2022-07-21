@@ -15,15 +15,17 @@ import { InputSystem, RenderingSystem, ShapeRenderer, GravitySystem, MovementSys
 import { BoxShapeComponent, VectorComponent } from "./src/components.js";
 
 const app = new Application({
-    config: {
-        canvas: {
-            width: 400,
-            height: 400,
+    data: {
+        config: {
+            canvas: {
+                width: 400,
+                height: 400,
+            }
+        },
+        state: {
+            score: 0,
+            loading: true
         }
-    },
-    initialState: {
-        score: 0,
-        loading: true
     },
     systems: [
         RenderingSystem, 
@@ -66,8 +68,8 @@ import { RenderableQuery, KinematicBodyQuery } from "./queries.js";
 
 export const RenderingSystem = app => {
     const canvas = document.createElement("canvas");
-    canvas.width = app.config.canvas.width;
-    canvas.height = app.config.canvas.height;
+    canvas.width = app.data.config.canvas.width;
+    canvas.height = app.data.config.canvas.height;
     canvas.style.background = "#000";
 
     const context = canvas.getContext("2d");
@@ -84,10 +86,10 @@ export const RenderingSystem = app => {
 
 export const InputSystem = app => {
 
-    app.state.keyboard = {};
+    app.data.state.keyboard = {};
 
     const handleKey = ({ key, type }) => {
-        app.state.keyboard[key === " " ? "Spacebar" : key] = type === "keydown";
+        app.data.state.keyboard[key === " " ? "Spacebar" : key] = type === "keydown";
     };
 
     window.addEventListener("keydown", handleKey);
@@ -97,7 +99,7 @@ export const InputSystem = app => {
 export const MovementSystem = app => {
     app.on("update", dt => {
         const [player] = app.query("controllable");
-        if(!player.tags.has("jumping") && app.state.keyboard.Spacebar) {
+        if(!player.tags.has("jumping") && app.data.state.keyboard.Spacebar) {
             player.velocity.y -= player.jumpforce * dt;
         }
     });

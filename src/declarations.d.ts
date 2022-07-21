@@ -1,7 +1,6 @@
 declare interface IApplication extends IEmitter {
     running: boolean,
-    state: {},
-    config: {},
+    data: {},
     systems: Set<ISystem>,
     entities: Set<IEntity>,
     add(entity): void,

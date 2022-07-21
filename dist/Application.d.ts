@@ -1,8 +1,7 @@
 import Emitter from "./Emitter";
 import EntityPool from "./EntityPool";
 export default class Application extends Emitter implements IApplication {
-    state: {};
-    config: {};
+    data: {};
     entityPool: EntityPool;
     entities: Set<IEntity>;
     systems: Set<ISystem>;
@@ -10,9 +9,8 @@ export default class Application extends Emitter implements IApplication {
     running: boolean;
     _lastStep: number;
     _frameRequest: number | null;
-    constructor({ initialState, config, systems }: {
-        initialState: {};
-        config: {};
+    constructor({ data, systems }: {
+        data: {};
         systems: ISystem[];
     });
     add(entity: IEntity): void;
