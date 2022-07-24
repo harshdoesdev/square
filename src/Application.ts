@@ -25,18 +25,12 @@ export default class Application extends Emitter implements IApplication {
     add(entity: IEntity) {
         this.emit("add", entity);
         this.entities.add(entity);
-
-        entity.on("tag", this.queryMap.boundHandleTag);
-        entity.on("untag", this.queryMap.boundHandleUntag);
     }
 
     remove(entity: IEntity) {
         this.emit("remove", entity);
         this.entities.delete(entity);
         this.entityPool.recycle(entity);
-
-        entity.off("tag", this.queryMap.boundHandleTag);
-        entity.off("untag", this.queryMap.boundHandleUntag);
     }
 
     query(q: string[]) {

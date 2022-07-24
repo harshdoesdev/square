@@ -3,8 +3,17 @@ export default class QueryMap implements IQueryMap {
     app: IApplication
     queryMap: Map<string[], Set<IEntity>>
 
-    boundHandleTag = this.handleTag.bind(this)
-    boundHandleUntag = this.handleUntag.bind(this)
+    handleTag = (_tag: string, entity: IEntity) => {
+        this.addToMap(entity);
+    }
+
+    handleUntag = (tag: string, entity: IEntity) => {
+        this.queryMap.forEach((entities, query) => {
+            if(entities.has(entity) && query.includes(tag)) {
+                entities.delete(entity);
+            }
+        });
+    }
 
     constructor(app: IApplication) {
         this.app = app;
@@ -27,10 +36,16 @@ export default class QueryMap implements IQueryMap {
     }
 
     onAdd(entity: IEntity) {
+        entity.on("tag", this.handleTag);
+        entity.on("untag", this.handleUntag);
+        
         this.addToMap(entity);
     }
 
     onRemove(entity: IEntity) {
+        entity.off("tag", this.handleTag);
+        entity.off("untag", this.handleUntag);
+
         this.removeFromMap(entity);
     }
 
@@ -51,22 +66,11 @@ export default class QueryMap implements IQueryMap {
         });
     }
 
-    handleTag(tag: string, entity: IEntity) {
-        this.addToMap(entity);
-    }
-
-    handleUntag(tag: string, entity: IEntity) {
-        this.queryMap.forEach((entities, query) => {
-            if(entities.has(entity) && query.includes(tag)) {
-                entities.delete(entity);
-            }
-        });
-    }
-
     static matchesQuery(entity: IEntity, query: string[]) {
         if(Array.isArray(query)) {
             return query.every(q => entity.tags.has(q));
         }
+
         return entity.tags.has(query);
     }
 

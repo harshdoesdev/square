@@ -1,13 +1,24 @@
 ![Square Banner](https://github.com/rare-earth/Square/raw/main/banner.png)
+
 # Square
+
 An Entity Component System(ECS) Based Game Framework
 
 ## Installation
+
+**NPM**
 ```bash
 npm i square-ecs
 ```
+**CDN**
+```javascript
+import { Application } from 'https://unpkg.com/square-ecs@latest';
+
+// your code
+```
 
 ## Example
+
 **app.js**
 ```javascript
 import { Application } from "square-ecs";
@@ -38,25 +49,17 @@ const app = new Application({
 
 app.on("init", app => {
     const player = app.entityPool.getEntity();
-    player.tag("visible");
-    player.tag("controllable");
-    player.tag("player");
 
-    player.attach("position", new VectorComponent(20, 20));
-    player.attach("shape", new BoxShapeComponent(32, 32));
-    player.attach("speed", 100);
-    player.attach("jumpforce", 500);
-    player.attach("velocity", new VectorComponent);
+    player.tag("visible")
+          .tag("controllable")
+          .tag("player")
+          .attach("position", new VectorComponent(20, 20))
+          .attach("shape", new BoxShapeComponent(32, 32))
+          .attach("speed", 100)
+          .attach("jumpforce", 500)
+          .attach("velocity", new VectorComponent);
 
     app.add(player);
-
-    const c = app.entityPool.getEntity();
-    c.tag("visible");
-    c.attach("position", new VectorComponent(100, 20));
-    c.attach("shape", new BoxShapeComponent(32, 32));
-    c.attach("velocity", new VectorComponent);
-
-    app.add(c);
 });
 
 app.start();
@@ -66,7 +69,7 @@ app.start();
 ```javascript
 import { RenderableQuery, KinematicBodyQuery } from "./queries.js";
 
-export const RenderingSystem = app => {
+export function RenderingSystem(app) {
     const canvas = document.createElement("canvas");
     canvas.width = app.data.config.canvas.width;
     canvas.height = app.data.config.canvas.height;
@@ -82,10 +85,9 @@ export const RenderingSystem = app => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         app.emit("render", context, canvas);
     });
-}
+};
 
-export const InputSystem = app => {
-
+export function InputSystem(app) {
     app.data.state.keyboard = {};
 
     const handleKey = ({ key, type }) => {
@@ -94,18 +96,18 @@ export const InputSystem = app => {
 
     window.addEventListener("keydown", handleKey);
     window.addEventListener("keyup", handleKey);
-};
+}
 
-export const MovementSystem = app => {
+export function MovementSystem(app) {
     app.on("update", dt => {
         const [player] = app.query("controllable");
         if(!player.tags.has("jumping") && app.data.state.keyboard.Spacebar) {
             player.velocity.y -= player.jumpforce * dt;
         }
     });
-};
+}
 
-export const ShapeRenderer = app => {
+export function ShapeRenderer(app) {
     app.on("render", ctx => {
         const entities = app.query(RenderableQuery);
 
@@ -116,9 +118,7 @@ export const ShapeRenderer = app => {
     });
 }
 
-export const GravitySystem = app => {
-    const GRAVITY_CONSTANT = 6.5;
-    
+export function GravitySystem(app) {
     app.on("update", dt => {
         const entities = app.query(KinematicBodyQuery);
         entities.forEach(entity => {
@@ -134,6 +134,8 @@ export const GravitySystem = app => {
         });
     });
 }
+
+GravitySystem.GRAVITY_CONSTANT = 6.5;
 ```
 
 **queries.js**

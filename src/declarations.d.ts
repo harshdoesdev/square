@@ -1,6 +1,6 @@
 declare interface IApplication extends IEmitter {
     running: boolean,
-    data: {},
+    data: object,
     systems: Set<ISystem>,
     entities: Set<IEntity>,
     add(entity): void,
@@ -38,8 +38,8 @@ declare interface IEmitter {
 }
 
 declare interface IQueryMap {
-    boundHandleTag(arg0: string, boundHandleTag: any)
-    boundHandleUntag(arg0: string, boundHandleUntag: any)
+    handleTag(tag: string, entity: IEntity)
+    handleUntag(tag: string, entity: IEntity)
     getEntities(q: any)
     app: IApplication
     queryMap: Map<string[], Set<IEntity>>

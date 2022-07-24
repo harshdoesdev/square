@@ -17,6 +17,10 @@ export default class Entity extends Emitter implements IEntity {
         this.tag('*');
     }
 
+    hasComponent(component: string) {
+        return this.components.has(`@${component}`);
+    }
+
     attach(prop: string, data: any) {
         this[prop as keyof Entity] = data;
         this.tag(`@${prop}`);
@@ -43,7 +47,7 @@ export default class Entity extends Emitter implements IEntity {
     }
 
     untag(tag: string) {
-        if(this.components.has(`@${tag}`)) {
+        if(this.hasComponent(tag)) {
             console.warn(`Component ${tag} could not be detached.`);
         }
         this.tags.delete(tag);
@@ -53,6 +57,7 @@ export default class Entity extends Emitter implements IEntity {
     }
 
     destroy() {
+        super.destroy();
         this.components.forEach(component => this.detach(component));
         this.components.clear();
         this.tags.clear();

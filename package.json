@@ -4,9 +4,8 @@
   "description": "![Square Banner](https://github.com/rare-earth/Square/raw/main/square-banner.png) # Square An Entity Component System(ECS) Based Game Framework",
   "main": "dist/index.js",
   "scripts": {
-    "clean": "tsc --build --clean",
-    "build": "tsc --build",
-    "watch": "tsc --watch"
+    "clean": "rm -rf dist",
+    "build": "rollup -c && tsc"
   },
   "repository": {
     "type": "git",
@@ -14,9 +13,19 @@
   },
   "keywords": [
     "entity component system",
-    "game framework"
+    "game framework",
+    "ecs"
   ],
-  "author": "",
+  "devDependencies": {
+    "esbuild": "^0.14.38",
+    "rollup": "^2.71.1",
+    "rollup-plugin-dts": "^4.2.1",
+    "rollup-plugin-esbuild": "^4.9.1"
+  },
+  "dependencies": {
+    "typescript": "^4.6.4"
+  },
+  "author": "Harsh Singh",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rare-earth/Square/issues"
