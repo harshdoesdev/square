@@ -126,7 +126,7 @@ export function GravitySystem(app) {
             
             if(entity.position.y < 200) {
                 entity.tag("jumping");
-                entity.velocity.y += 5 * GRAVITY_CONSTANT * dt;
+                entity.velocity.y += 5 * GravitySystem.GRAVITY_CONSTANT * dt;
             } else {
                 entity.untag("jumping");
                 entity.velocity.y = 0;
