@@ -21,6 +21,7 @@ declare interface IEntity extends IEmitter {
     components: Set<string>,
     attach(prop: string, data: any): this,
     detach(prop: string): this,
+    hasComponent(component: string): boolean,
     tag(tag: string): this,
     untag(tag: string): this,
     destroy(): void
